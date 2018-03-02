@@ -41,6 +41,8 @@
 
 #include "vulkan/vulkan.h"
 
+#include "vkTFInterface.h"
+
 #include "keycodes.hpp"
 #include "VulkanTools.h"
 #include "VulkanDebug.h"
@@ -52,8 +54,38 @@
 #include "camera.hpp"
 #include "benchmark.hpp"
 
-class VulkanExampleBase
+class VulkanExampleBase : public vkTFInterface
 {
+public:
+    int vkTFInit(void*);
+    int vkTFRender(int);
+    int vkTFExit(void);
+#if defined(_WIN32)
+    static LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+    {
+        VulkanExampleBase* pThis = nullptr;
+        if (uMsg == WM_CREATE)
+        {
+            pThis = static_cast<VulkanExampleBase*>(reinterpret_cast<CREATESTRUCT*>(lParam)->lpCreateParams);
+            SetLastError(0);
+            if (!SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pThis))) {
+                if (GetLastError() != 0) {
+                    return FALSE;
+                }
+            }
+        } else {
+            pThis = reinterpret_cast<VulkanExampleBase*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+        }
+
+        if (pThis) {
+            pThis->handleMessages(hWnd, uMsg, wParam, lParam);
+        }
+
+        return (DefWindowProc(hWnd, uMsg, wParam, lParam));
+    };
+#endif
+    
+    
 private:	
 	// fps timer (one second interval)
 	float fpsTimer = 0.0f;
@@ -243,7 +275,7 @@ public:
 #endif
 
 	// Default ctor
-	VulkanExampleBase(bool enableValidation);
+	VulkanExampleBase(void* ptr);
 
 	// dtor
 	virtual ~VulkanExampleBase();

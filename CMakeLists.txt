@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.0)
 
-project(vkTF)
+project(vkPlay)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
@@ -28,7 +28,7 @@ link_directories(${EXTERN_DIR}/lib/${BUILD_ARCH})
 link_directories(${VULKAN_LIBRARY_DIR})
 
 set(LIBRARIES 
-    shaderc_shared
+    shaderc_shared base ${VULKAN_LIBRARY}
 )
 
 if (WIN32)
@@ -37,16 +37,15 @@ endif()
 
 add_subdirectory(include/base)
 
-add_library(vkTFlib SHARED
-    include/vkTFlib.h
-    include/vkTFInterface.h
-    lib/vkTFlib.cpp
+add_library(vkPlaylib SHARED
+    include/vkPlaylib.h
+    lib/vkPlaylib.cpp
 )
-target_link_libraries(vkTFlib ${LIBRARIES})
+target_link_libraries(vkPlaylib ${LIBRARIES})
 
 
-add_executable(vkTF WIN32
-    src/vkTF.cpp
+add_executable(vkPlay WIN32
+    src/vkPlay.cpp
 )
 
 add_subdirectory(test)

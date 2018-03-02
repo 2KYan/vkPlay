@@ -1,29 +1,32 @@
-//=======================================================================
-//
-// Copyright 2011 Yan, All Rights Reserved
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+/*=======================================================================
+This file is part of vkPlay
+
+vkPlay is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+vkPlay is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+*/
 //=======================================================================
 /*
-    Descriptions:
+Descriptions:
 
-    Notes:
+Notes:
 
-    Authors:
-        2KYan, 2KYan@outlook.com
+Authors:
+2KYan, 2KYan@outlook.com
 
 */
 //=======================================================================
 //
+
 #if defined(WIN32)
 #include <windows.h>
 #elif defined (LINUX)
@@ -40,15 +43,15 @@
 #include <streambuf>
 #include <mutex>
 
-#include "vkTFlib.h"
+#include "vkPlaylib.h"
 #include "shaderc/shaderc.hpp"
 
-vkTFlib* vkTFlib::instance()
+vkPlaylib* vkPlaylib::instance()
 {
     std::mutex inst_m;
     std::lock_guard<std::mutex> l(inst_m);
 
-    static std::unique_ptr<vkTFlib> thisPtr(new vkTFlib);
+    static std::unique_ptr<vkPlaylib> thisPtr(new vkPlaylib);
     static bool isInit = false;
     if (isInit == false) {
         isInit = true;
@@ -58,16 +61,16 @@ vkTFlib* vkTFlib::instance()
     return thisPtr.get();
 }
 
-vkTFlib::vkTFlib() 
+vkPlaylib::vkPlaylib() 
 {
     m_enableSPVDump = false;
 }
 
-vkTFlib::~vkTFlib()
+vkPlaylib::~vkPlaylib()
 {
 }
 
-int vkTFlib::initPaths()
+int vkPlaylib::initPaths()
 {
 char* envPath = nullptr;
 std::vector<std::string> paths = { "./" };
@@ -101,15 +104,15 @@ for (const auto& path : paths) {
 return 0;
 }
 
-std::string vkTFlib::getShaderFileName(const char* fileName) {
+std::string vkPlaylib::getShaderFileName(const char* fileName) {
     return getResourceFileName(fileName, ResourceType::SHADER);
 }
 
-std::string vkTFlib::getTextureFileName(const char* fileName) {
+std::string vkPlaylib::getTextureFileName(const char* fileName) {
     return getResourceFileName(fileName, ResourceType::TEXTURE);
 }
 
-std::string vkTFlib::getResourceFileName(const std::string& fileName, ResourceType resType)
+std::string vkPlaylib::getResourceFileName(const std::string& fileName, ResourceType resType)
 {
     struct stat buffer;
     for (const auto& resPath : resPaths[static_cast<int>(resType)]) {
@@ -121,7 +124,7 @@ std::string vkTFlib::getResourceFileName(const std::string& fileName, ResourceTy
     return std::string();
 }
 
-std::string vkTFlib::getFileNameWoExt(const std::string& fileName)
+std::string vkPlaylib::getFileNameWoExt(const std::string& fileName)
 {
     std::string fileNameStr(fileName);
     std::string sep("\\");
@@ -136,7 +139,7 @@ std::string vkTFlib::getFileNameWoExt(const std::string& fileName)
     return fileNameStr;
 }
 
-std::string vkTFlib::getSpvFileName(const std::string& fileName)
+std::string vkPlaylib::getSpvFileName(const std::string& fileName)
 {
     std::string fileNameStr(getFileNameWoExt(fileName));
     auto offset = 0;
@@ -146,7 +149,7 @@ std::string vkTFlib::getSpvFileName(const std::string& fileName)
     return fileNameStr + ".spv";
 }
 
-std::stringstream vkTFlib::glslCompile(const char* fileName, int shader_type)
+std::stringstream vkPlaylib::glslCompile(const char* fileName, int shader_type)
 {
     std::stringstream stream;
     size_t size = 0;
@@ -159,7 +162,7 @@ std::stringstream vkTFlib::glslCompile(const char* fileName, int shader_type)
     return stream;
 }
 
-std::vector<uint32_t> vkTFlib::glslCompile(const char* fileName, size_t& size, int shader_type)
+std::vector<uint32_t> vkPlaylib::glslCompile(const char* fileName, size_t& size, int shader_type)
 {
     std::vector<uint32_t> spvBinary;
 
@@ -196,7 +199,7 @@ std::vector<uint32_t> vkTFlib::glslCompile(const char* fileName, size_t& size, i
 
 }
 
-void* vkTFlib::glslRead(const char* fileName, size_t& size) 
+void* vkPlaylib::glslRead(const char* fileName, size_t& size) 
 {
     std::string glslFileName;
     std::string outSpvFileName;
@@ -224,13 +227,13 @@ void* vkTFlib::glslRead(const char* fileName, size_t& size)
     return nullptr;
 }
 
-int vkTFlib::glsl2spv(const std::string& glslFileName, const std::string& outSpvFileName)
+int vkPlaylib::glsl2spv(const std::string& glslFileName, const std::string& outSpvFileName)
 {
     std::string cmdLine = std::string("glslangValidator -s -V -o") + outSpvFileName + " " + glslFileName;
     return execCmd(cmdLine);
 }
 
-int vkTFlib::execCmd(std::string& cmd) 
+int vkPlaylib::execCmd(std::string& cmd) 
 {
     int rtnVal = 0;
 #if defined(WIN32)

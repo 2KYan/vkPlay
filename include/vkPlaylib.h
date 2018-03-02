@@ -1,43 +1,45 @@
-//=======================================================================
-//
-// Copyright 2011 Yan, All Rights Reserved
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+/*=======================================================================
+This file is part of vkPlay
+
+vkPlay is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+vkPlay is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+*/
 //=======================================================================
 /*
-    Descriptions:
+Descriptions:
 
-    Notes:
+Notes:
 
-    Authors:
-        2KYan, 2KYan@outlook.com
+Authors:
+2KYan, 2KYan@outlook.com
 
 */
 //=======================================================================
 //
 
-#ifndef _VKTF_LIB_H_
-#define _VKTF_LIB_H_
+#ifndef _VKPLAY_LIB_H_
+#define _VKPLAY_LIB_H_
 #pragma once
 
-class vkTFlib {
+class vkPlaylib {
     enum class ResourceType {
         SHADER = 0,
         TEXTURE,
         NUM_RESOURCES,
     };
 public:
-    virtual ~vkTFlib();
-    static vkTFlib* instance();
+    virtual ~vkPlaylib();
+    static vkPlaylib* instance();
 
     std::string getShaderFileName(const char* fileName);
     std::string getTextureFileName(const char* fileName);
@@ -54,15 +56,15 @@ protected:
     int glsl2spv(const std::string& glslFileName, const std::string& spvFileName);
 
 private:
-    vkTFlib();
-    vkTFlib(vkTFlib const&) = delete;
-    vkTFlib& operator=(vkTFlib const &) = delete;
-    vkTFlib(vkTFlib &&) = delete;
-    vkTFlib& operator=(vkTFlib &&) = delete;
+    vkPlaylib();
+    vkPlaylib(vkPlaylib const&) = delete;
+    vkPlaylib& operator=(vkPlaylib const &) = delete;
+    vkPlaylib(vkPlaylib &&) = delete;
+    vkPlaylib& operator=(vkPlaylib &&) = delete;
     
 private:
     bool m_enableSPVDump;
     std::vector<std::string> resPaths[static_cast<int>(ResourceType::NUM_RESOURCES)];
 };
 
-#endif//_VKTF_LIB_H_
+#endif//_VKPLAY_LIB_H_

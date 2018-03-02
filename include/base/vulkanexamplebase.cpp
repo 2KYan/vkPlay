@@ -651,8 +651,10 @@ void VulkanExampleBase::submitFrame()
 	VK_CHECK_RESULT(vkQueueWaitIdle(queue));
 }
 
-VulkanExampleBase::VulkanExampleBase(bool enableValidation)
+VulkanExampleBase::VulkanExampleBase(void* ptr)
 {
+    testArgs = *reinterpret_cast<TestArgs*>(ptr);
+
 #if !defined(VK_USE_PLATFORM_ANDROID_KHR)
 	// Check for a valid asset path
 	struct stat info;
@@ -668,7 +670,7 @@ VulkanExampleBase::VulkanExampleBase(bool enableValidation)
 	}
 #endif
 
-	settings.validation = enableValidation;
+    settings.validation = false;
 
 	char* numConvPtr;
 
