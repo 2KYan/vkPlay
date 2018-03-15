@@ -1,7 +1,9 @@
 # Directories
 bin/
-build/
-external/ 
+.vs/
+build/B_*
+Debug/
+Release/
  
 # Prerequisites
 *.d

@@ -20,7 +20,7 @@
 cmake_minimum_required(VERSION 3.1)
 
 add_definitions(-D"BLOCK=${VKTF_BLOCK}")
-set(LIBNAME vktests_${VKTF_BLOCK})
+set(LIBNAME vktf_${VKTF_BLOCK})
 
 add_library(${LIBNAME} SHARED ${TESTS})
 target_link_libraries(${LIBNAME} ${LIBRARIES})

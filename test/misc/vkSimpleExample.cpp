@@ -16,7 +16,7 @@
 namespace BLOCK
 {
 
-    class vkTFSimpleExample: public VulkanExampleBase
+    class vkSimpleExample: public VulkanExampleBase
     {
     public:
         // Vertex layout used in this example
@@ -95,14 +95,14 @@ namespace BLOCK
         // Used to check the completion of queue operations (e.g. command buffer execution)
         std::vector<VkFence> waitFences;
 
-        vkTFSimpleExample(void*ptr) : VulkanExampleBase(ptr)
+        vkSimpleExample(void*ptr) : VulkanExampleBase(ptr)
         {
             zoom = -2.5f;
             title = "Vulkan Example - Basic indexed triangle";
             // Values not set here are initialized in the base class constructor
         }
 
-        ~vkTFSimpleExample()
+        ~vkSimpleExample()
         {
             // Clean up used Vulkan resources 
             // Note: Inherited destructor cleans up resources stored in base class
@@ -763,7 +763,7 @@ namespace BLOCK
         VkShaderModule loadSPIRVShader(std::string filename)
         {
             size_t shaderSize;
-            char* shaderCode;
+            char* shaderCode = NULL;
 
             #if defined(__ANDROID__)
             // Load shader from compressed asset
@@ -1068,7 +1068,7 @@ namespace BLOCK
 
 };
 
-EXPORTTESTCLASS(BLOCK, vkTFSimpleExample)
+EXPORTTESTCLASS(BLOCK, vkSimpleExample)
 
 #if defined(_FAKE_WIN32)
 // Windows entry point
