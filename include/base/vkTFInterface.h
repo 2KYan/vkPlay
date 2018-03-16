@@ -34,6 +34,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include "vkPlaylib.h"
+
 class vkTFInterface {
 public:
     struct TestArgs

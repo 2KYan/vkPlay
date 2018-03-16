@@ -163,6 +163,8 @@ int main(int argc, char** argv) {
                 }
             }
             FreeLibrary(hDllInst);
+        } else {
+            std::cout << GetLastError() << std::endl
         }
     }
 }

@@ -55,7 +55,7 @@ vkPlaylib* vkPlaylib::instance()
     static bool isInit = false;
     if (isInit == false) {
         isInit = true;
-        thisPtr->initPaths();
+        thisPtr->initResPaths();
     }
 
     return thisPtr.get();
@@ -70,38 +70,48 @@ vkPlaylib::~vkPlaylib()
 {
 }
 
-int vkPlaylib::initPaths()
+int vkPlaylib::initResPaths()
 {
-char* envPath = nullptr;
-std::vector<std::string> paths = { "./" };
-std::vector<std::string> resourceTypeStrings = { "shader/", "texture/" };
+    char* envPath = nullptr;
+    std::vector<std::string> paths = { "./data" };
+    std::vector<std::string> resourceTypeStrings = { "shader/", "texture/" };
 
-std::unordered_map<std::string, std::string> envPaths = {
-    { "DEV_HOME", "/data/"},
-};
+    std::unordered_map<std::string, std::string> envPaths = {
+        { "DEV_HOME", "/data/"},
+    };
 
-for (const auto& envVar : envPaths) {
-    if ((envPath = getenv(envVar.first.c_str())) != nullptr) {
-        paths.push_back(std::string(envPath) + envVar.second);
+    for (const auto& envVar : envPaths) {
+        if ((envPath = getenv(envVar.first.c_str())) != nullptr) {
+            paths.push_back(std::string(envPath) + envVar.second);
+        }
     }
-}
 
-std::string resPath;
-struct stat buffer;
-for (const auto& path : paths) {
+    std::string resPath;
+    struct stat buffer;
     for (int i = 0; i < static_cast<int>(ResourceType::NUM_RESOURCES); ++i) {
-        resPath = path;
-        if (stat(resPath.c_str(), &buffer) == 0) {
-            resPaths[i].push_back(resPath);
-        }
-        resPath = path + resourceTypeStrings[i];
-        if (stat(resPath.c_str(), &buffer) == 0) {
-            resPaths[i].push_back(resPath);
+        resPaths[i].clear();
+        for (const auto& path : paths) {
+                resPath = path;
+            if (stat(resPath.c_str(), &buffer) == 0) {
+                resPaths[i].push_back(resPath);
+            }
+            resPath = path + resourceTypeStrings[i];
+            if (stat(resPath.c_str(), &buffer) == 0) {
+                resPaths[i].push_back(resPath);
+            }
         }
     }
+
+    return 0;
 }
 
-return 0;
+int vkPlaylib::numResPaths()
+{
+    int numPaths = 0;
+    for (auto& p: resPaths) {
+        numPaths += int(p.size());
+    }
+    return numPaths;
 }
 
 std::string vkPlaylib::getShaderFileName(const char* fileName) {
@@ -142,7 +152,7 @@ std::string vkPlaylib::getFileNameWoExt(const std::string& fileName)
 std::string vkPlaylib::getSpvFileName(const std::string& fileName)
 {
     std::string fileNameStr(getFileNameWoExt(fileName));
-    auto offset = 0;
+    size_t offset = 0;
     while ((offset = fileNameStr.find('.', offset)) != std::string::npos) {
         fileNameStr.replace(offset, 1, 1, '-');
     }

@@ -31,6 +31,7 @@ Authors:
 #define _VKPLAY_LIB_H_
 #pragma once
 
+
 class vkPlaylib {
     enum class ResourceType {
         SHADER = 0,
@@ -48,8 +49,9 @@ public:
     std::vector<uint32_t> glslCompile(const char* fileName, size_t& size, int shader_type);
     std::stringstream glslCompile(const char* fileName, int shader_type);
 
+    int numResPaths();
 protected:
-    int initPaths();
+    int initResPaths();
     std::string getResourceFileName(const std::string& fileName, ResourceType resType);
     std::string getFileNameWoExt(const std::string& fileName);
     std::string getSpvFileName(const std::string& fileName);

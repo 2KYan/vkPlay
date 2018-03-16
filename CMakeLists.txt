@@ -24,7 +24,7 @@ include_directories(${EXTERN_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/include/base)
 
-link_directories(${EXTERN_DIR}/lib/${BUILD_ARCH})
+link_directories(${CMAKE_SOURCE_DIR}/lib/${BUILD_ARCH})
 link_directories(${VULKAN_LIBRARY_DIR})
 
 set(LIBRARIES 

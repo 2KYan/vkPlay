@@ -655,6 +655,7 @@ VulkanExampleBase::VulkanExampleBase(void* ptr)
 {
     testArgs = *reinterpret_cast<TestArgs*>(ptr);
 
+    int x = vkPlaylib::instance()->numResPaths();
 #if !defined(VK_USE_PLATFORM_ANDROID_KHR)
 	// Check for a valid asset path
 	struct stat info;
