@@ -29,6 +29,8 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 #include <iostream>
 #include <string>
 
+#include <filesystem>
+
 #include "vkPlay.h"
 #include "vkTFInterface.h"
 #include "getopt.h"
@@ -106,7 +108,7 @@ vkTFInterface::TestArgs parsingArgs(int argc, char**argv)
                 assert(false && "Incorrect command line options");
         }
     }
-
+    /* Old code to get dll*/
     while (optind < argc) {
         std::string blockname;
         std::string filename = std::string(argv[optind]);
@@ -129,6 +131,22 @@ vkTFInterface::TestArgs parsingArgs(int argc, char**argv)
 int main(int argc, char** argv) {
     vkTFInterface::TestArgs args = parsingArgs(argc, argv);
 
+    std::string path = ".";
+    for (auto & p : std::experimental::filesystem::directory_iterator(path)) {
+        std::string extension = p.path().extension().string();
+        if (extension == ".dll" || extension == ".so") {
+            std::string stem = p.path().stem().string();
+            std::string filename = p.path().filename().string();
+            auto  block_offset = stem.rfind("_");
+            if (block_offset != std::string::npos)            
+            {
+                auto blockname = stem.substr(block_offset + 1, stem.size() - 1);
+                args.libNames.insert(std::make_pair(filename, blockname));
+                std::cout << filename << std::endl;
+            }
+        }
+    }
+ 
     for(auto lib: args.libNames) {
         HINSTANCE hDllInst = LoadLibrary(lib.first.c_str());
         if (hDllInst != nullptr) {

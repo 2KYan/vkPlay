@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\test\misc\vkSecondExample.cpp" />
     <ClCompile Include="..\..\..\test\misc\vkSimpleExample.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -75,7 +76,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>%VULKAN_SDK%/include;../../../extern;../../../extern/glm;../../../extern/gli;../../../include;../../../include/base;$(IncludePath)</IncludePath>
+    <IncludePath>$(VULKAN_SDK)/Include;../../../extern;../../../extern/glm;../../../extern/gli;../../../include;../../../include/base;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>

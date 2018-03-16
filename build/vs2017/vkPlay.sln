@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vkPlayLib", "vkPlayLib\vkPlayLib.vcxproj", "{3BAE73C0-F056-4331-BD21-5559B2B489A1}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vkPlay", "vkPlay\vkPlay.vcxproj", "{0890DA3A-F8A0-425A-9F9D-F902D8F6DB7C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "base\base.vcxproj", "{A3D5A4EE-AF1B-4701-A6B2-5A3A204A54A4}"
@@ -22,14 +20,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3BAE73C0-F056-4331-BD21-5559B2B489A1}.Debug|x64.ActiveCfg = Debug|x64
-		{3BAE73C0-F056-4331-BD21-5559B2B489A1}.Debug|x64.Build.0 = Debug|x64
-		{3BAE73C0-F056-4331-BD21-5559B2B489A1}.Debug|x86.ActiveCfg = Debug|Win32
-		{3BAE73C0-F056-4331-BD21-5559B2B489A1}.Debug|x86.Build.0 = Debug|Win32
-		{3BAE73C0-F056-4331-BD21-5559B2B489A1}.Release|x64.ActiveCfg = Release|x64
-		{3BAE73C0-F056-4331-BD21-5559B2B489A1}.Release|x64.Build.0 = Release|x64
-		{3BAE73C0-F056-4331-BD21-5559B2B489A1}.Release|x86.ActiveCfg = Release|Win32
-		{3BAE73C0-F056-4331-BD21-5559B2B489A1}.Release|x86.Build.0 = Release|Win32
 		{0890DA3A-F8A0-425A-9F9D-F902D8F6DB7C}.Debug|x64.ActiveCfg = Debug|x64
 		{0890DA3A-F8A0-425A-9F9D-F902D8F6DB7C}.Debug|x64.Build.0 = Debug|x64
 		{0890DA3A-F8A0-425A-9F9D-F902D8F6DB7C}.Debug|x86.ActiveCfg = Debug|Win32

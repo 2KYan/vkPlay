@@ -21,6 +21,7 @@ cmake_minimum_required(VERSION 3.1)
 
 set(TESTS
     vkSimpleExample.cpp
+    vkSecondExample.cpp
 )
 
 include(../common.cmake)

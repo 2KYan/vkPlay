@@ -18,5 +18,8 @@
     <ClCompile Include="..\..\..\test\misc\vkSimpleExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\test\misc\vkSecondExample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

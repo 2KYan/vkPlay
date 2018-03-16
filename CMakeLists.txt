@@ -37,13 +37,6 @@ endif()
 
 add_subdirectory(include/base)
 
-add_library(vkPlaylib SHARED
-    include/vkPlaylib.h
-    lib/vkPlaylib.cpp
-)
-target_link_libraries(vkPlaylib ${LIBRARIES})
-
-
 add_executable(vkPlay WIN32
     src/vkPlay.cpp
 )

@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>%VULKAN_SDK%\Include;../../../extern;../../../extern/glm;../../../extern/gli;../../../include;../../../include/base;$(IncludePath)</IncludePath>
+    <IncludePath>$(VULKAN_SDK)/Include;../../../extern;../../../extern/glm;../../../extern/gli;../../../include;../../../include/base;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -159,6 +159,7 @@
     <ClInclude Include="..\..\..\include\base\frustum.hpp" />
     <ClInclude Include="..\..\..\include\base\keycodes.hpp" />
     <ClInclude Include="..\..\..\include\base\threadpool.hpp" />
+    <ClInclude Include="..\..\..\include\base\vkPlaylib.h" />
     <ClInclude Include="..\..\..\include\base\vkTFInterface.h" />
     <ClInclude Include="..\..\..\include\base\VulkanAndroid.h" />
     <ClInclude Include="..\..\..\include\base\VulkanBuffer.hpp" />
@@ -179,6 +180,9 @@
     <ClCompile Include="..\..\..\extern\imgui\imgui.cpp" />
     <ClCompile Include="..\..\..\extern\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\..\..\extern\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\include\base\vkPlaylib.cpp">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
     <ClCompile Include="..\..\..\include\base\vkTFInterface.cpp" />
     <ClCompile Include="..\..\..\include\base\VulkanAndroid.cpp" />
     <ClCompile Include="..\..\..\include\base\VulkanDebug.cpp" />
