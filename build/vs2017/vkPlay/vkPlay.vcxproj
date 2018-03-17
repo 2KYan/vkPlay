@@ -89,6 +89,9 @@
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);VK_USE_PLATFORM_WIN32_KHR;WIN32_LEAN_AND_MEAN</PreprocessorDefinitions>
       <AdditionalOptions>/Zc:strictStrings- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>copy /y "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)/../../bin"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

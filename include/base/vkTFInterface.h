@@ -38,8 +38,9 @@
 
 class vkTFInterface {
 public:
-    struct TestArgs
+    class TestArgs
     {
+    public:
         std::unordered_map<std::string, std::string> libNames;
         std::vector<std::string> testNames;
         uint32_t height = 512;
@@ -49,8 +50,23 @@ public:
         int window_flag = 0;
         int start_frame = 0;
         int total_frame = 1;
+        int validation = 0;
+        int vsync = 0;
+
+        bool fullscreen = false;
+        bool overlay = false;
+        
+        class BenchmarkArgs {
+        public:
+            int active = false;
+            uint32_t warmup = 0;
+            uint32_t duration = 0;
+            std::string filename;
+            bool outputFrameTimes = false;
+        };
+        BenchmarkArgs benchmark;
     };
-    TestArgs testArgs;
+    TestArgs settings;
 public:
     virtual int vkTFInit(void*) = 0;
     virtual int vkTFRender(int) = 0;

@@ -653,14 +653,15 @@ void VulkanExampleBase::submitFrame()
 
 VulkanExampleBase::VulkanExampleBase(void* ptr)
 {
-    testArgs = *reinterpret_cast<TestArgs*>(ptr);
+    settings = *reinterpret_cast<TestArgs*>(ptr);
 
     int x = vkPlaylib::instance()->numResPaths();
 #if !defined(VK_USE_PLATFORM_ANDROID_KHR)
 	// Check for a valid asset path
-	struct stat info;
-	if (stat(getAssetPath().c_str(), &info) != 0)
-	{
+    //struct stat info;
+    //if (stat(getAssetPath().c_str(), &info) != 0)
+    if (vkPlaylib::instance()->numResPaths() == 0)
+ 	{
 #if defined(_WIN32)
 		std::string msg = "Could not locate asset path in \"" + getAssetPath() + "\" !";
 		MessageBox(NULL, msg.c_str(), "Fatal error", MB_OK | MB_ICONERROR);
@@ -671,74 +672,17 @@ VulkanExampleBase::VulkanExampleBase(void* ptr)
 	}
 #endif
 
-    settings.validation = false;
+    if (settings.benchmark.active) {
+        benchmark.active = settings.benchmark.active;
+        benchmark.outputFrameTimes = settings.benchmark.outputFrameTimes;
+        benchmark.warmup = settings.benchmark.warmup;
+        benchmark.duration = settings.benchmark.duration;
+        benchmark.filename = settings.benchmark.filename;
 
-	char* numConvPtr;
-
-	// Parse command line arguments
-	for (size_t i = 0; i < args.size(); i++)
-	{
-		if (args[i] == std::string("-validation")) {
-			settings.validation = true;
-		}
-		if (args[i] == std::string("-vsync")) {
-			settings.vsync = true;
-		}
-		if ((args[i] == std::string("-f")) || (args[i] == std::string("--fullscreen"))) {
-			settings.fullscreen = true;
-		}
-		if ((args[i] == std::string("-w")) || (args[i] == std::string("-width"))) {
-			uint32_t w = strtol(args[i + 1], &numConvPtr, 10);
-			if (numConvPtr != args[i + 1]) { width = w; };
-		}
-		if ((args[i] == std::string("-h")) || (args[i] == std::string("-height"))) {
-			uint32_t h = strtol(args[i + 1], &numConvPtr, 10);
-			if (numConvPtr != args[i + 1]) { height = h; };
-		}
-		// Benchmark
-		if ((args[i] == std::string("-b")) || (args[i] == std::string("--benchmark"))) {
-			benchmark.active = true;
-			vks::tools::errorModeSilent = true;
-		}
-		// Warmup time (in seconds)
-		if ((args[i] == std::string("-bw")) || (args[i] == std::string("--benchwarmup"))) {
-			if (args.size() > i + 1) {
-				uint32_t num = strtol(args[i + 1], &numConvPtr, 10);
-				if (numConvPtr != args[i + 1]) {
-					benchmark.warmup = num;
-				} else {
-					std::cerr << "Warmup time for benchmark mode must be specified as a number!" << std::endl;
-				}
-			}
-		}
-		// Benchmark runtime (in seconds)
-		if ((args[i] == std::string("-br")) || (args[i] == std::string("--benchruntime"))) {
-			if (args.size() > i + 1) {
-				uint32_t num = strtol(args[i + 1], &numConvPtr, 10);
-				if (numConvPtr != args[i + 1]) {
-					benchmark.duration = num;
-				}
-				else {
-					std::cerr << "Benchmark run duration must be specified as a number!" << std::endl;
-				}
-			}
-		}
-		// Bench result save filename (overrides default)
-		if ((args[i] == std::string("-bf")) || (args[i] == std::string("--benchfilename"))) {
-			if (args.size() > i + 1) {
-				if (args[i + 1][0] == '-') {
-					std::cerr << "Filename for benchmark results must not start with a hyphen!" << std::endl;
-				} else {
-					benchmark.filename = args[i + 1];
-				}
-			}
-		}
-		// Output frame times to benchmark result file
-		if ((args[i] == std::string("-bt")) || (args[i] == std::string("--benchframetimes"))) {
-			benchmark.outputFrameTimes = true;
-		}
+        vks::tools::errorModeSilent = true;
 	}
-	
+
+
 #if defined(VK_USE_PLATFORM_ANDROID_KHR)
 	// Vulkan library is loaded dynamically on Android
 	bool libLoaded = vks::android::loadVulkanLibrary();

@@ -176,18 +176,6 @@ public:
 	/** @brief Encapsulated physical and logical vulkan device */
 	vks::VulkanDevice *vulkanDevice;
 
-	/** @brief Example settings that can be changed e.g. by command line arguments */
-	struct Settings {
-		/** @brief Activates validation layers (and message output) when set to true */
-		bool validation = false;
-		/** @brief Set to true if fullscreen mode has been requested via command line */
-		bool fullscreen = false;
-		/** @brief Set to true if v-sync will be forced for the swapchain */
-		bool vsync = false;
-		/** @brief Enable UI overlay */
-		bool overlay = false;
-	} settings;
-
 	VkClearColorValue defaultClearColor = { { 0.025f, 0.025f, 0.025f, 1.0f } };
 
 	float zoom = 0;

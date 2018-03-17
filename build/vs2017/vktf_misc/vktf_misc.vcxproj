@@ -102,6 +102,9 @@
       <AdditionalDependencies>%(AdditionalDependencies);vulkan-1.lib;base.lib;shaderc_shared.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(VULKAN_SDK)/Lib;$(SolutionDir)../../lib/$(Platform);../$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)/../../bin"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -53,16 +53,22 @@ vkTFInterface::TestArgs parsingArgs(int argc, char**argv)
     vkTFInterface::TestArgs args;
     struct option long_options[] = 
     {
-        { "verbose", no_argument      , &args.verbose_flag, 1  },
-        { "window",  no_argument      , &args.window_flag , 1  },
-        { "dump",    no_argument      , &args.dump_flag   , 1  },
-        { "test",    required_argument, 0,                 't' },
-        { "frame",   required_argument, 0,                 'f' },
-        { "total",   required_argument, 0,                 'l' },
-        { "height",  required_argument, 0,                 'h' },
-        { "width",   required_argument, 0,                 'w' },
-        { 0,         0                , 0,                  0  },
-
+    { "verbose",    no_argument      , &args.verbose_flag,      1  },
+    { "window",     no_argument      , &args.window_flag ,      1  },
+    { "dump",       no_argument      , &args.dump_flag   ,      1  },
+    { "check",      no_argument      , &args.validation,        1  },
+    { "vsync",      no_argument      , &args.vsync     ,        1  },
+    { "benchmark",  no_argument      , &args.benchmark.active,  0  },
+    { "benchwarmup",required_argument, 0,                      'a' },
+    { "benchuptime",required_argument, 0,                      'u' },
+    { "benchfile",  required_argument, 0,                      'o' },
+    { "benchfps",   required_argument, 0,                      'p' },
+    { "test",       required_argument, 0,                      't' },
+    { "frame",      required_argument, 0,                      'f' },
+    { "total",      required_argument, 0,                      'l' },
+    { "height",     required_argument, 0,                      'h' },
+    { "width",      required_argument, 0,                      'w' },
+    { 0,            0                , 0,                       0  },
     };
 
     int option_index = 0;
@@ -164,7 +170,7 @@ int main(int argc, char** argv) {
             }
             FreeLibrary(hDllInst);
         } else {
-            std::cout << GetLastError() << std::endl
+            std::cout << GetLastError() << std::endl;
         }
     }
 }
